@@ -29,8 +29,7 @@ celpip-learner/
 ├── backend/                   # Python agent — runs locally
 │   ├── agent/
 │   │   └── __init__.py        # Agent entry point (empty frame)
-│   ├── pyproject.toml
-│   └── requirements.txt
+│   └── pyproject.toml
 │
 ├── proxy/                     # claude-code-proxy config
 │   └── config.yaml            # Model routing rules
@@ -71,7 +70,7 @@ celpip-learner/
 |------------|------------------|-------|--------------------------------|
 | `postgres` | `postgres:16`    | 5432  | Long-term memory (sessions, history) |
 | `redis`    | `redis:7`        | 6379  | Short-term memory (active session state) |
-| `proxy`    | `1rgs/claude-code-proxy` (pre-built) | 8080 | LLM model routing layer |
+| `proxy`    | `1rgs/claude-code-proxy` (pre-built) | 8082 | LLM model routing layer |
 
 All services configured via environment variables from `.env`.
 
@@ -82,7 +81,7 @@ All services configured via environment variables from `.env`.
 ```
 # LLM
 ANTHROPIC_API_KEY=
-ANTHROPIC_BASE_URL=http://localhost:8080
+ANTHROPIC_BASE_URL=http://localhost:8082
 
 # Database
 DATABASE_URL=postgresql://celpip:celpip@localhost:5432/celpip
@@ -102,7 +101,7 @@ OPENAI_API_KEY=
 User (browser)
   → Next.js frontend (localhost:3000)
   → Python backend agent (localhost:8000)
-  → claude-code-proxy (localhost:8080)
+  → claude-code-proxy (localhost:8082)
   → LLM provider (Anthropic / OpenAI / etc.)
 
 Agent also reads/writes:

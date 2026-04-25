@@ -18,4 +18,6 @@ async def run_agent(prompt: str) -> list[str]:
 
 
 def main() -> None:
-    anyio.run(run_agent, "Hello from CELPIP agent")
+    responses = anyio.run(run_agent, "Hello from CELPIP agent")
+    for r in responses:
+        print(r)

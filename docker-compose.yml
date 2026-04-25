@@ -29,8 +29,13 @@ services:
     image: ghcr.io/1rgs/claude-code-proxy:latest
     ports:
       - "8082:8082"
-    env_file:
-      - .env
+    environment:
+      - PREFERRED_PROVIDER=${PREFERRED_PROVIDER:-anthropic}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+      - BIG_MODEL=${BIG_MODEL:-claude-opus-4-5}
+      - SMALL_MODEL=${SMALL_MODEL:-claude-haiku-4-5-20251001}
 
 volumes:
   postgres_data:
