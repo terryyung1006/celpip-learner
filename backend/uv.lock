@@ -54,7 +54,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "anyio", specifier = ">=4.0" },
-    { name = "claude-agent-sdk" },
+    { name = "claude-agent-sdk", specifier = ">=0.1.68" },
     { name = "psycopg2-binary", specifier = ">=2.9" },
     { name = "python-dotenv", specifier = ">=1.0" },
     { name = "redis", specifier = ">=5.0" },
