@@ -1,0 +1,32 @@
+# claude-code-proxy model routing configuration
+# Reference: https://github.com/1rgs/claude-code-proxy
+#
+# Configure via environment variables in .env (picked up by docker-compose).
+# The proxy exposes a Claude-compatible API on port 8082.
+# Backend connects via: ANTHROPIC_BASE_URL=http://localhost:8082
+#
+# Required env vars (set at least one provider):
+#
+#   PREFERRED_PROVIDER=anthropic|openai|google
+#
+#   # Anthropic
+#   ANTHROPIC_API_KEY=sk-ant-...
+#
+#   # OpenAI
+#   OPENAI_API_KEY=sk-...
+#
+#   # Google Vertex AI
+#   GEMINI_API_KEY=...
+#   USE_VERTEX_AUTH=true        # optional, for service account auth
+#   VERTEX_PROJECT=my-project
+#   VERTEX_LOCATION=us-central1
+#
+# Optional model overrides:
+#   BIG_MODEL=claude-opus-4-5       # or gpt-4o, gemini-2.0-flash-exp, etc.
+#   SMALL_MODEL=claude-haiku-4-5-20251001  # or gpt-4o-mini, etc.
+#
+# Example: route everything through OpenAI
+#   PREFERRED_PROVIDER=openai
+#   OPENAI_API_KEY=sk-...
+#   BIG_MODEL=gpt-4o
+#   SMALL_MODEL=gpt-4o-mini
