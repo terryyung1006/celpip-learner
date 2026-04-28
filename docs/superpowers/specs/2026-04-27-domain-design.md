@@ -33,17 +33,17 @@ Study Mode
 
 ### 1. Whole Article
 User writes a complete response to a generated CELPIP prompt (Task 1: email, Task 2: opinion essay).
-- Evaluation: all 4 criteria (Coherence, Vocabulary, Readability, Spelling & Punctuation)
+- Evaluation: all 4 criteria (Coherence, Vocabulary, Readability, Task Fulfilment)
 - Output: per-criterion band scores (1–12) + written feedback per criterion
 
 ### 2. Sentence Rewrite
 Given a sentence with a known CELPIP band score, the user rewrites it to reach a higher target band.
-- Evaluation: Vocabulary, Readability, Spelling & Punctuation
+- Evaluation: Vocabulary, Readability
 - Output: new band score + diff of what improved
 
 ### 3. Sentence Write
 User writes a sentence given a topic/context or fills in a missing sentence in a paragraph.
-- Evaluation: Vocabulary, Readability, Spelling & Punctuation
+- Evaluation: Vocabulary, Readability
 - Output: band score + feedback
 
 ### 4. Word/Phrase Fill
@@ -61,7 +61,7 @@ Spaced-repetition drill targeting mistakes the user has made in previous session
 
 **SM-2 fields per mistake item:** `interval`, `easiness_factor`, `repetitions`, `next_review_at`
 
-- Evaluation: depends on the mistake's criterion (grammar → Readability/S&P, vocab → Vocabulary)
+- Evaluation: depends on the mistake's criterion (grammar → Readability, vocab → Vocabulary)
 - Mistake types stored: grammar error, incorrect vocab usage
 
 ---
@@ -101,7 +101,7 @@ One skill per CELPIP criterion. Each skill:
 | **Coherence** | Article-level only | Whole Article |
 | **Vocabulary** | Article + Sentence + Word/Phrase | All modes |
 | **Readability** | Article + Sentence | Whole Article, Sentence Rewrite, Sentence Write, Mistake Revision |
-| **Spelling & Punctuation** | Article + Sentence | Whole Article, Sentence Rewrite, Sentence Write, Mistake Revision |
+| **Task Fulfilment** | Article-level only | Whole Article |
 
 ---
 
