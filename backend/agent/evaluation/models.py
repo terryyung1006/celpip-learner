@@ -12,6 +12,10 @@ class ReferenceExample:
     task_type: TaskType
     analysis: str = ""
 
+    def __post_init__(self):
+        if not 1 <= self.band_score <= 12:
+            raise ValueError(f"band_score must be 1–12, got {self.band_score}")
+
 
 @dataclass
 class EvaluationResult:

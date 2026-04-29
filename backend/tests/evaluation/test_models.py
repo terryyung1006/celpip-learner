@@ -21,3 +21,9 @@ def test_reference_example_stores_analysis():
         text="Text.", band_score=9, task_type="task_2_survey", analysis="Good vocab."
     )
     assert ex.analysis == "Good vocab."
+
+
+def test_reference_example_rejects_out_of_range_band_score():
+    import pytest
+    with pytest.raises(ValueError, match="band_score must be 1"):
+        ReferenceExample(text="x", band_score=13, task_type="task_1_email")
