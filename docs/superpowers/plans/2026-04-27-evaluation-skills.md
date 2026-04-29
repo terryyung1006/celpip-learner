@@ -154,13 +154,19 @@ def test_all_rubrics_mention_band_9():
         assert "Band 9" in rubric
 
 
-def test_reference_examples_has_two_entries():
-    assert len(REFERENCE_EXAMPLES) == 2
+def test_all_rubrics_mention_band_8():
+    for rubric in [COHERENCE_RUBRIC, VOCABULARY_RUBRIC, READABILITY_RUBRIC, TASK_FULFILMENT_RUBRIC]:
+        assert "Band 8" in rubric
 
 
-def test_reference_examples_both_band_9():
-    for ex in REFERENCE_EXAMPLES:
-        assert ex.band_score == 9
+def test_reference_examples_has_four_entries():
+    assert len(REFERENCE_EXAMPLES) == 4
+
+
+def test_reference_examples_include_band_9_and_band_8():
+    band_scores = {ex.band_score for ex in REFERENCE_EXAMPLES}
+    assert 9 in band_scores
+    assert 8 in band_scores
 
 
 def test_reference_examples_cover_both_task_types():
@@ -183,17 +189,23 @@ Expected: `ImportError` — modules not found.
 COHERENCE_RUBRIC = """CELPIP Writing — Content/Coherence Criterion
 
 Band 9 indicators:
-- Write short formal and informal texts of some complexity. Both texts are complex, and the
-  complexity is more consistent than at lower bands.
+- Write short formal and informal texts of some complexity. Complexity is more consistent
+  than at lower bands.
 - Support key ideas with relevant facts, descriptions, details, or quotations. Ideas are
   supported with both relevant personal details and facts/descriptions (e.g., information
   about school and work schedules; explanation of the results of cutting back a service).
 
+Band 8 indicators:
+- Write short, moderately complex texts. More complexity in ideas than at Band 7 but less
+  consistently developed than Band 9.
+- Develop a main idea with supporting details. Supporting details are more specific and less
+  repetitive than at Band 7 (e.g., specific personal scenarios and community-level reasoning).
+
 Scoring guidance:
 - Band 10–12: Complexity is very consistent; key ideas are thoroughly and precisely supported
   with multiple types of evidence.
-- Band 7–8: Texts show some complexity but less consistently; key ideas are supported but
-  development may be uneven.
+- Band 7: Texts show some complexity; key ideas are supported but development is uneven or
+  repetitive.
 - Band 5–6: Texts are mostly simple in structure; key ideas may be stated without adequate
   support or development.
 - Band 1–4: Texts are very short or simple; key ideas are absent or unsupported.
@@ -208,12 +220,18 @@ Band 9 indicators:
 - Few errors in vocabulary. Words that effectively indicate comparison are used
   (e.g., "as opposed to", "more efficient").
 
+Band 8 indicators:
+- Use common or context-specific words to communicate meaning. Meaning is communicated more
+  precisely and concisely than at Band 7.
+- Common words and phrases used appropriately (e.g., "work late", "hang out", "about right").
+- Some context-specific words and expressions used (e.g., "a regular patron", "family friendly",
+  "junk mails", "preferred mode of correspondence").
+
 Scoring guidance:
 - Band 10–12: Word choices are precise and varied throughout; virtually no errors.
-- Band 7–8: Vocabulary is generally accurate and varied; occasional imprecision or errors
-  that do not impede meaning.
-- Band 5–6: Vocabulary is adequate but limited or repetitive; some errors that occasionally
-  impede meaning.
+- Band 7: Vocabulary is generally adequate; meaning is communicated but with less precision
+  and conciseness than Band 8.
+- Band 5–6: Vocabulary is limited or repetitive; some errors that occasionally impede meaning.
 - Band 1–4: Very limited vocabulary; frequent errors that impede comprehension.
 """
 
@@ -230,11 +248,16 @@ Band 9 indicators:
 - Write with good control of spelling and punctuation. Spelling errors are rare; punctuation
   is mostly correct.
 
+Band 8 indicators:
+- Write well-organized paragraphs with a clear main idea per paragraph.
+- Write with good control of complex grammatical structures, spelling, and punctuation.
+  Quite a few errors are present but they generally don't impede comprehension of ideas.
+
 Scoring guidance:
 - Band 10–12: Paragraphs are tightly organised; grammar is highly accurate; complex structures
   used with ease; virtually no spelling or punctuation errors.
-- Band 7–8: Paragraphs are generally organised; grammar is mostly accurate with some errors;
-  complex structures attempted with some success.
+- Band 7: Paragraphs are generally organised; grammar is mostly accurate with more errors than
+  Band 8; complex structures attempted with partial success.
 - Band 5–6: Paragraph organisation is inconsistent; grammar errors are noticeable but
   communication is maintained; spelling and punctuation errors are frequent.
 - Band 1–4: Little or no paragraph structure; frequent grammar, spelling, and punctuation
@@ -251,11 +274,19 @@ Band 9 indicators:
 - Convey the intended meaning. The writer successfully conveys everything intended to be
   communicated.
 
+Band 8 indicators:
+- Present information using a tone and style that follows common writing conventions.
+  Responses contain an appropriate mix of relevant personal information and ideas with a
+  wider/less personal scope (e.g., community benefits, institutional trends).
+- Convey and support main ideas about a topic. Contextually appropriate style is used
+  (e.g., "I am writing to you with regards to", "I would appreciate", "I will look forward
+  to your favourable response").
+
 Scoring guidance:
 - Band 10–12: Tone and style fully meet all formal and informal conventions; meaning is
   conveyed completely and precisely.
-- Band 7–8: Tone and style are mostly appropriate with minor lapses; intended meaning is
-  conveyed though some details may be unclear.
+- Band 7: Tone and style are mostly appropriate with minor lapses; intended meaning is
+  conveyed though some details may be missing or unclear.
 - Band 5–6: Tone and style are somewhat appropriate; the response addresses the task but
   some parts are incomplete or off-topic.
 - Band 1–4: Tone and style are largely inappropriate; the response fails to address key
@@ -329,7 +360,78 @@ TASK_B_LEVEL_9 = ReferenceExample(
     ),
 )
 
-REFERENCE_EXAMPLES: list[ReferenceExample] = [TASK_A_LEVEL_9, TASK_B_LEVEL_9]
+TASK_A_LEVEL_8 = ReferenceExample(
+    text=(
+        "Dear Chief Librarian,\n\n"
+        "I am writing to you with regards to the operating hours of your library. I would appreciate "
+        "that the library committee will consider operating on Sundays and Mondays as well.\n\n"
+        "I am a regular patron of your library. I need to visit the library for my research and self "
+        "study sessions required for my part time MBA course. Occasionally, I would be required to "
+        "work late for meetings and overtime, and would not be meet the library operating hours. I "
+        "could only use the library on Saturday, which is a day I would need to complete other "
+        "household chores.\n\n"
+        "By opening your library daily, it can benefit not just me, but the entire community. Most "
+        "families will spend their Sundays doing things together. The library can certainly organize "
+        "story telling sessions or talks/workshops that are family friendly on Sundays. There are also "
+        "many schools surrounding your library. Your library is an excellent place for highschoolers "
+        "to hang out after school for self studies or project meetings. Therefore, there is every "
+        "reason to open on Mondays too!\n\n"
+        "I hope my suggestions can be considered by the committee. I will look forward to your "
+        "favourable response soon.\n\n"
+        "Regards\n\nWendy"
+    ),
+    band_score=8,
+    task_type="task_1_email",
+    analysis=(
+        "Content/Coherence: Main idea developed with supporting details; more specific and less "
+        "repetitive than Band 7. Includes personal scenario (MBA course, work schedule) and "
+        "community-level reasoning (family sessions, high school students).\n"
+        "Vocabulary: Common words used appropriately ('work late', 'hang out', 'every reason', "
+        "'community'). Context-specific phrases used ('a regular patron', 'family friendly').\n"
+        "Readability: Well-organised paragraphs. Quite a few errors ('would not be meet', "
+        "'story telling') but they generally don't impede comprehension.\n"
+        "Task Fulfilment: Appropriate mix of personal information and wider community scope. "
+        "Contextually appropriate formal phrases used ('I am writing to you with regards to', "
+        "'I will look forward to your favourable response')."
+    ),
+)
+
+TASK_B_LEVEL_8 = ReferenceExample(
+    text=(
+        "My option is to have my mails delivered to my home twice a week. Though it's only twice a "
+        "week, but it does not change my daily routine. We do not need to allocate time for post "
+        "office pick up. Sometimes, both my husband and myself may be too occupied at work, and may "
+        "miss picking up the mails. I sincerely do not want to miss out important mails for that "
+        "reason.\n\n"
+        "Base on our mailing records, we do not receive mails daily. At least for relevant mails. "
+        "We do have junk mails delivered daily, which is not favoured. We had opted for electronic "
+        "mails for most of our banking and financial institutions. So we will not be expecting "
+        "regular mails from them. Government bodies are also starting to mail electronically, which "
+        "is the our preferred mode of correspondence. Twice a week of mail delivery is about right "
+        "for our family. In fact, we do not require to clear our mailbox stuffed with junk mails "
+        "everyday anymore!"
+    ),
+    band_score=8,
+    task_type="task_2_survey",
+    analysis=(
+        "Content/Coherence: Main idea developed with supporting details; more specific than Band 7. "
+        "Ideas include personal details (routine, husband's schedule) and broader institutional "
+        "trends (banks and government shifting to electronic mail).\n"
+        "Vocabulary: Common phrases used appropriately ('at work', 'about right', 'miss out'). "
+        "Context-specific expressions used ('junk mails', 'preferred mode of correspondence').\n"
+        "Readability: Paragraphs are well-organised. Quite a few errors ('Base on', 'the our') "
+        "but they generally don't impede comprehension.\n"
+        "Task Fulfilment: Appropriate mix of personal information and wider scope. Contextually "
+        "appropriate style ('both my husband and myself may be too occupied')."
+    ),
+)
+
+REFERENCE_EXAMPLES: list[ReferenceExample] = [
+    TASK_A_LEVEL_9,
+    TASK_B_LEVEL_9,
+    TASK_A_LEVEL_8,
+    TASK_B_LEVEL_8,
+]
 ```
 
 - [ ] **Step 5: Run tests to verify they pass**
@@ -342,10 +444,11 @@ Expected:
 ```
 PASSED tests/evaluation/test_rubrics.py::test_all_rubrics_are_non_empty_strings
 PASSED tests/evaluation/test_rubrics.py::test_all_rubrics_mention_band_9
-PASSED tests/evaluation/test_rubrics.py::test_reference_examples_has_two_entries
-PASSED tests/evaluation/test_rubrics.py::test_reference_examples_both_band_9
+PASSED tests/evaluation/test_rubrics.py::test_all_rubrics_mention_band_8
+PASSED tests/evaluation/test_rubrics.py::test_reference_examples_has_four_entries
+PASSED tests/evaluation/test_rubrics.py::test_reference_examples_include_band_9_and_band_8
 PASSED tests/evaluation/test_rubrics.py::test_reference_examples_cover_both_task_types
-5 passed
+6 passed
 ```
 
 - [ ] **Step 6: Commit**
@@ -686,7 +789,7 @@ __all__ = [
 cd backend && uv run pytest tests/evaluation/ -v
 ```
 
-Expected: All 17 tests pass.
+Expected: All 19 tests pass.
 
 - [ ] **Step 5: Run full test suite to confirm no regressions**
 
