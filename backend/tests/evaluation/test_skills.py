@@ -1,9 +1,14 @@
 import pytest
+from claude_agent_sdk.types import AssistantMessage, TextBlock
 from agent.evaluation.models import EvaluationResult, ReferenceExample
 
 
+def _make_assistant_message(text: str) -> AssistantMessage:
+    return AssistantMessage(content=[TextBlock(text=text)], model="claude-test")
+
+
 async def _mock_query(prompt):
-    yield '{"band_score": 9, "feedback": "Strong coherence throughout the response."}'
+    yield _make_assistant_message('{"band_score": 9, "feedback": "Strong coherence throughout the response."}')
 
 
 @pytest.fixture
@@ -95,7 +100,7 @@ async def test_evaluate_accepts_custom_reference_examples(mock_lm):
 @pytest.mark.asyncio
 async def test_evaluate_raises_value_error_on_invalid_json(monkeypatch):
     async def bad_query(prompt):
-        yield "not json at all"
+        yield _make_assistant_message("not json at all")
     monkeypatch.setattr("agent.evaluation.skills.query", bad_query)
     from agent.evaluation.skills import evaluate_coherence
     with pytest.raises(ValueError, match="invalid JSON"):
@@ -105,7 +110,7 @@ async def test_evaluate_raises_value_error_on_invalid_json(monkeypatch):
 @pytest.mark.asyncio
 async def test_evaluate_raises_value_error_on_out_of_range_band(monkeypatch):
     async def bad_band_query(prompt):
-        yield '{"band_score": 13, "feedback": "out of range"}'
+        yield _make_assistant_message('{"band_score": 13, "feedback": "out of range"}')
     monkeypatch.setattr("agent.evaluation.skills.query", bad_band_query)
     from agent.evaluation.skills import evaluate_coherence
     with pytest.raises(ValueError, match="out of range"):

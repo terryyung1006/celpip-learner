@@ -1,5 +1,6 @@
 import json
 from claude_agent_sdk import query
+from claude_agent_sdk.types import AssistantMessage, TextBlock
 from agent.evaluation.models import EvaluationResult, ReferenceExample, Criterion
 from agent.evaluation.rubrics import (
     COHERENCE_RUBRIC,
@@ -41,16 +42,25 @@ async def _evaluate(
     prompt = _build_prompt(criterion, rubric, reference_examples, text)
     parts: list[str] = []
     async for message in query(prompt=prompt):
-        parts.append(str(message))
+        if isinstance(message, AssistantMessage):
+            for block in message.content:
+                if isinstance(block, TextBlock):
+                    parts.append(block.text)
     raw = "".join(parts)
     try:
         data = json.loads(raw)
     except json.JSONDecodeError as e:
         raise ValueError(f"LLM returned invalid JSON: {raw!r}") from e
-    band_score = int(data["band_score"])
-    if not 1 <= band_score <= 12:
-        raise ValueError(f"band_score {band_score} out of range 1-12")
-    return EvaluationResult(criterion=criterion, band_score=band_score, feedback=data["feedback"])
+    try:
+        raw_score = data["band_score"]
+        feedback = data["feedback"]
+    except (KeyError, TypeError) as e:
+        raise ValueError(f"LLM response missing expected fields: {data!r}") from e
+    if not isinstance(raw_score, int):
+        raise ValueError(f"band_score must be an integer, got {raw_score!r}")
+    if not 1 <= raw_score <= 12:
+        raise ValueError(f"band_score {raw_score} out of range 1-12")
+    return EvaluationResult(criterion=criterion, band_score=raw_score, feedback=feedback)
 
 
 async def evaluate_coherence(
