@@ -27,3 +27,25 @@ def test_reference_example_stores_analysis():
 def test_reference_example_rejects_out_of_range_band_score():
     with pytest.raises(ValueError, match="band_score must be 1"):
         ReferenceExample(text="x", band_score=13, task_type="task_1_email")
+
+
+def test_package_exports_all_public_symbols():
+    from agent.evaluation import (
+        EvaluationResult,
+        ReferenceExample,
+        Criterion,
+        TaskType,
+        evaluate_coherence,
+        evaluate_vocabulary,
+        evaluate_readability,
+        evaluate_task_fulfilment,
+        COHERENCE_RUBRIC,
+        VOCABULARY_RUBRIC,
+        READABILITY_RUBRIC,
+        TASK_FULFILMENT_RUBRIC,
+        REFERENCE_EXAMPLES,
+    )
+    assert EvaluationResult is not None
+    assert evaluate_coherence is not None
+    assert COHERENCE_RUBRIC is not None
+    assert REFERENCE_EXAMPLES is not None
