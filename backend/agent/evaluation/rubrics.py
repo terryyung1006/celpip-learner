@@ -1,3 +1,15 @@
+"""
+CELPIP Writing rubric text constants.
+
+Text is derived from official CELPIP Writing Task rubric descriptors.
+Each constant covers Band 9 and Band 8 anchor indicators plus band-by-band
+scoring guidance for the full 1–12 range. Consumed by skills.py to build
+LLM evaluation prompts.
+
+Note: Spelling & Punctuation is incorporated into READABILITY_RUBRIC.
+The four criteria are: Coherence, Vocabulary, Readability, Task Fulfilment.
+"""
+
 COHERENCE_RUBRIC = """CELPIP Writing — Content/Coherence Criterion
 
 Band 9 indicators:

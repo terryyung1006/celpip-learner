@@ -1,3 +1,11 @@
+"""
+Calibration reference examples for LLM evaluation prompts.
+
+Each ReferenceExample is a real CELPIP writing sample with a known band score
+and per-criterion analysis. REFERENCE_EXAMPLES contains one Level 9 and one
+Level 8 sample for each task type (task_1_email, task_2_survey).
+"""
+
 from agent.evaluation.models import ReferenceExample
 
 TASK_A_LEVEL_9 = ReferenceExample(
