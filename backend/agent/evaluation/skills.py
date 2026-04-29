@@ -47,6 +47,8 @@ async def _evaluate(
                 if isinstance(block, TextBlock):
                     parts.append(block.text)
     raw = "".join(parts)
+    if not raw.strip():
+        raise ValueError("LLM returned an empty response")
     try:
         data = json.loads(raw)
     except json.JSONDecodeError as e:
@@ -56,7 +58,7 @@ async def _evaluate(
         feedback = data["feedback"]
     except (KeyError, TypeError) as e:
         raise ValueError(f"LLM response missing expected fields: {data!r}") from e
-    if not isinstance(raw_score, int):
+    if not isinstance(raw_score, int) or isinstance(raw_score, bool):
         raise ValueError(f"band_score must be an integer, got {raw_score!r}")
     if not 1 <= raw_score <= 12:
         raise ValueError(f"band_score {raw_score} out of range 1-12")
