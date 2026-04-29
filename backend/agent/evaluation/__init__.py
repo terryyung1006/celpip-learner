@@ -1,3 +1,4 @@
+"""Public API for the CELPIP evaluation package."""
 from agent.evaluation.models import EvaluationResult, ReferenceExample, Criterion, TaskType
 from agent.evaluation.rubrics import (
     COHERENCE_RUBRIC,
