@@ -1,3 +1,4 @@
+import pytest
 from agent.evaluation.models import EvaluationResult, ReferenceExample
 
 
@@ -24,6 +25,5 @@ def test_reference_example_stores_analysis():
 
 
 def test_reference_example_rejects_out_of_range_band_score():
-    import pytest
     with pytest.raises(ValueError, match="band_score must be 1"):
         ReferenceExample(text="x", band_score=13, task_type="task_1_email")
