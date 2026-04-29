@@ -19,6 +19,7 @@ def _build_prompt(
 ) -> str:
     examples_block = "\n\n".join(
         f"[Band {ex.band_score} — {ex.task_type}]:\n{ex.text}"
+        + (f"\nAnalysis: {ex.analysis}" if ex.analysis else "")
         for ex in reference_examples
     )
     criterion_label = criterion.replace("_", " ").title()
@@ -62,6 +63,8 @@ async def _evaluate(
         raise ValueError(f"band_score must be an integer, got {raw_score!r}")
     if not 1 <= raw_score <= 12:
         raise ValueError(f"band_score {raw_score} out of range 1-12")
+    if not isinstance(feedback, str) or not feedback.strip():
+        raise ValueError(f"feedback must be a non-empty string, got {feedback!r}")
     return EvaluationResult(criterion=criterion, band_score=raw_score, feedback=feedback)
 
 

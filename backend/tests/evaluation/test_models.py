@@ -29,6 +29,11 @@ def test_reference_example_rejects_out_of_range_band_score():
         ReferenceExample(text="x", band_score=13, task_type="task_1_email")
 
 
+def test_evaluation_result_rejects_out_of_range_band_score():
+    with pytest.raises(ValueError, match="band_score must be 1"):
+        EvaluationResult(criterion="coherence", band_score=0, feedback="ok")
+
+
 def test_package_exports_all_public_symbols():
     import agent.evaluation as pkg
     for name in pkg.__all__:

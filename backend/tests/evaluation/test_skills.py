@@ -154,3 +154,24 @@ async def test_evaluate_raises_value_error_on_bool_band_score(monkeypatch):
     from agent.evaluation.skills import evaluate_coherence
     with pytest.raises(ValueError, match="must be an integer"):
         await evaluate_coherence("Text.")
+
+
+@pytest.mark.asyncio
+async def test_evaluate_raises_value_error_on_empty_feedback(monkeypatch):
+    async def empty_feedback_query(prompt):
+        yield _make_assistant_message('{"band_score": 9, "feedback": ""}')
+    monkeypatch.setattr("agent.evaluation.skills.query", empty_feedback_query)
+    from agent.evaluation.skills import evaluate_coherence
+    with pytest.raises(ValueError, match="non-empty string"):
+        await evaluate_coherence("Text.")
+
+
+def test_build_prompt_includes_analysis_when_present():
+    from agent.evaluation.skills import _build_prompt
+    prompt = _build_prompt(
+        "coherence",
+        "rubric",
+        [ReferenceExample(text="Sample.", band_score=9, task_type="task_1_email", analysis="Good flow.")],
+        "Text.",
+    )
+    assert "Good flow." in prompt
